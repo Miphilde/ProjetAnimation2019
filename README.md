@@ -14,3 +14,11 @@ Partie jeu:
 - Clic droit n'importe où dans la fenêtre avec une branche sélectionnée (couleur jaune): lancer la branche dans cette direction
 
 N'hésitez pas à visionner la vidéo de démonstration !
+
+EDIT 04/02/2020:
+
+La librairie Sound était actuellement non-fonctionnelle, la dernière version du projet utilise la librairie Minim.
+Il est possible que vous deviez l'installer, pour cela: 
+Sketch -> Importer une librairie -> Ajouter une librairie... -> Rechercher "Minim" -> Installer
+
+
