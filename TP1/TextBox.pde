@@ -9,7 +9,9 @@ class TextBox{
   PFont font;
   String[] text;
   
-  SoundFile[] audio;
+  AudioPlayer[] audioMimic;
+  SoundFile[] audioSound;
+  boolean mimic;
   
   int fontSize = 48;
   int padding = 20;
@@ -22,7 +24,19 @@ class TextBox{
     textColor = ct;
     font = loadFont(f);
     currentDisplay = 0;
-    audio =s;
+    audioSound =s;
+    mimic = false;
+  }
+  
+  TextBox( PVector p, color cb, int a, color ct, String f, AudioPlayer[] s){
+    position = p;
+    background = cb;
+    transparency = a;
+    textColor = ct;
+    font = loadFont(f);
+    currentDisplay = 0;
+    audioMimic = s;
+    mimic = true;
   }
   
   void setText(String [] t){
@@ -31,7 +45,6 @@ class TextBox{
       text[i] = t[i];    
     }
     currentDisplay =0;
-    audio = new SoundFile[0];
   }
   
   void nextString(){
@@ -61,8 +74,14 @@ class TextBox{
     //text(text[currentDisplay], position.x + padding, position.y+padding+fontSize);   
     textAlign(CENTER,CENTER);
     text(text[currentDisplay], width/2, height -(height-position.y)/2);
-    if(audio.length > currentDisplay)
-      audio[currentDisplay].play();
+    
+    if (mimic){
+      if(audioMimic.length > currentDisplay)
+        audioMimic[currentDisplay].play();
+    }else{
+      if(audioSound.length > currentDisplay)
+        audioSound[currentDisplay].play();
+    }
   }
   
   

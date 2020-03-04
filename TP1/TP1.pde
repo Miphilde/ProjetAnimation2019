@@ -1,6 +1,7 @@
 // Programme principal de l'animation
 import processing.sound.*;
 import java.util.Iterator;
+import ddf.minim.*;
 
 //paramètres
 int decay =20;
@@ -27,7 +28,6 @@ String[] text1 = {"Les esprits de la forêt sont agités, cette nuit.",
 "Des intrus seraient-ils entrés ?", 
 "Je ne les laisserai pas atteindre le manoir.", "Je protègerai mes amis à tout prix !"};
 String[] audioPath = { "dub1.mp3", "dub2.mp3", "dub3.mp3", "dub4.mp3"};
-SoundFile[] audio;
 
 String[] text2 = {"Les ennemis etaient bien trop nombreux.", "Ils ont pris le manoir, tout est perdu."};
 String [] text3 = {"Les ennemis s'enfuient !", "Le manoir est sauvé !"};
@@ -68,6 +68,8 @@ GameManager manager;
 
 int scene;
 
+boolean minim = true;
+
 void setup()
 {
   size(800, 800);
@@ -85,12 +87,23 @@ void setup()
   
   system = new ParticleSystem(count, globalColor);
 
-  audio = new SoundFile [4];
-  audio[0] = new SoundFile(this, audioPath[0]);
-  audio[1] = new SoundFile(this, audioPath[1]);
-  audio[2] = new SoundFile(this, audioPath[2]); 
-  audio[3] = new SoundFile(this, audioPath[3]);
-  textBox = new TextBox(new PVector(0, height-textBoxHeight), textBoxColor, textBoxTransparency, textColor, font1, audio);
+  if (!minim){
+    SoundFile[] audio = new SoundFile [4];  
+    audio[0] = new SoundFile(this, audioPath[0]);
+    audio[1] = new SoundFile(this, audioPath[1]);
+    audio[2] = new SoundFile(this, audioPath[2]); 
+    audio[3] = new SoundFile(this, audioPath[3]);
+    textBox = new TextBox(new PVector(0, height-textBoxHeight), textBoxColor, textBoxTransparency, textColor, font1,audio);
+  } else{
+    Minim minim = new Minim(this);
+    AudioPlayer[] audio = new AudioPlayer[4];  
+    audio[0] = minim.loadFile(audioPath[0]);
+    audio[1] = minim.loadFile(audioPath[1]);
+    audio[2] = minim.loadFile(audioPath[2]);
+    audio[3] = minim.loadFile(audioPath[3]);
+    textBox = new TextBox(new PVector(0, height-textBoxHeight), textBoxColor, textBoxTransparency, textColor, font1,audio); 
+  }
+  
   textBox.setText(text1);
 
   panning =0;
